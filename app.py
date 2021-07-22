@@ -52,7 +52,7 @@ app.config.update(
 
 dropzone = Dropzone(app)
 
-# source: https://pynative.com/python-generate-random-string/
+# source: https://pynative.com/python-generate-random-string/
 def get_random_string(length):
     # choose from all lowercase letter
     letters = string.ascii_lowercase
@@ -133,9 +133,24 @@ def create_charts(arr, name, folder):
             y_axs = 1
 
         x_axs = {1: 0, 2: 0, 3: 1, 4: 1, 5: 2, 6: 2, 7: 3, 8: 3, 9: 4, 10: 4}
+        colors = {
+            0: [0,0,0],
+            1: [255,25,236],
+            2: [215,25,28],
+            3: [211,154,92],
+            4: [33,115,55],
+            5: [21,75,35],
+            6: [118,209,93],
+            7: [130,130,130],
+            8: [0,0,0],
+            9: [43,61,255]
+        }
+        for k, v in colors.items():
+            new = [x/255 for x in v]
+            colors[k] = new
 
-        axs[x_axs[r], y_axs].scatter(x, vals)
-        axs[x_axs[r], y_axs].plot(x, vals)
+        axs[x_axs[r], y_axs].scatter(x, vals, color=colors[r], markersize=5)
+        axs[x_axs[r], y_axs].plot(x, vals, color=colors[r], linewidth=4.0)
         axs[x_axs[r], y_axs].set_ylim([0, 100])
         axs[x_axs[r], y_axs].set_xticks(range(1,len(arr)+1))
         axs[x_axs[r], y_axs].set_ylabel('[%]')
@@ -278,5 +293,5 @@ def upload():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
    #app.run(debug=True, port=80)

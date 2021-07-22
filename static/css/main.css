@@ -34,7 +34,7 @@ h2{
   height:  100%;
   background-size:  100%;
   background-repeat:  no-repeat;
-  background-position: center ;
+  background-position: center bottom;
 }
 
 #container {
@@ -102,8 +102,8 @@ img{
   49% {margin-top:-180px;}
   50% {margin-top:-90px;}
   74% {margin-top:-90px;}
-  75% {margin-top:0px;}
-  99.9% {margin-top:0px;}
+  75% {margin-top:-4px;}
+  99.9% {margin-top:-4px;}
   100% {margin-top:-350px;}
 }
 
@@ -213,4 +213,15 @@ img{
 .div-center{
   display:  block;
   text-align: center;
+}
+
+.circle {
+  font-size:40px;
+  position: relative;
+  top: 5px;
+}
+
+.sentence-one-line{
+  padding-bottom:  20px;
+  margin-top:  50px;
 }
