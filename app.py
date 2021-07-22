@@ -103,9 +103,9 @@ def show_mask(img_name, folder, mask, classes_colorpalette, classes=None, add_le
 def create_charts(arr, name, folder):
 
     plt.clf()
-    fig, axs = plt.subplots(5, 2, figsize=(15,15))
+    #fig, axs = plt.subplots(5, 2, figsize=(15,15))
     #fig.tight_layout()
-    fig.subplots_adjust(hspace=10)
+    #fig.subplots_adjust(hspace=10)
 
     for r in range(1, 10):
 
@@ -149,14 +149,21 @@ def create_charts(arr, name, folder):
             new = [x/255 for x in v]
             colors[k] = new
 
-        axs[x_axs[r], y_axs].scatter(x, vals, color=colors[r])
-        axs[x_axs[r], y_axs].plot(x, vals, color=colors[r], linewidth=4.0)
-        axs[x_axs[r], y_axs].set_ylim([0, 100])
-        axs[x_axs[r], y_axs].set_xticks(range(1,len(arr)+1))
-        axs[x_axs[r], y_axs].set_ylabel('[%]')
-        axs[x_axs[r], y_axs].set_title(classname)
+        #axs[x_axs[r], y_axs].scatter(x, vals, color=colors[r])
+        #axs[x_axs[r], y_axs].plot(x, vals, color=colors[r], linewidth=4.0)
+        #axs[x_axs[r], y_axs].set_ylim([0, 100])
+        #axs[x_axs[r], y_axs].set_xticks(range(1,len(arr)+1))
+        #axs[x_axs[r], y_axs].set_ylabel('[%]')
+        #axs[x_axs[r], y_axs].set_title(classname)
 
-    fig.subplots_adjust(hspace=0.2)
+        plt.scatter(x, vals, color=colors[r])
+        plt.plot(x, vals, color=colors[r], linewidth=4.0, label=classname)
+        plt.ylim([0, 100])
+        plt.xticks(range(1,len(arr)+1))
+        plt.ylabel('[%]')
+        plt.legend()
+
+    #fig.subplots_adjust(hspace=0.2)
 
     plt.savefig(SAVE_FOLDER + folder + 'charts/' + 'chart.png', bbox_inches='tight', transparent=True)
 
@@ -191,7 +198,7 @@ def results():
     print(images_folder)
     images_to_classify = sorted(list(images_folder.glob('[0-9A-Za-z]*.tif')))
     print(images_to_classify)
-    to_classify = create_arrays(images_to_classify)
+    #to_classify = create_arrays(images_to_classify)
 
     if request.method == "POST":
         if request.form['model'] == 'xgboost':
