@@ -5,7 +5,7 @@ Flask-Uploads==0.2.1
 joblib
 matplotlib
 numpy
-opencv-python==4.5.3.56
+opencv-python-headless==4.5.3.56
 pandas
 Pillow
 PyYAML==5.4.1
