@@ -16,4 +16,3 @@ https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow_cpu-2.5.0-cp39-cp
 tifffile
 tqdm
 Werkzeug==2.0.1
-https://files.pythonhosted.org/packages/c8/9b/2ed8bfa595c2b1ee1dc255f012ecea049bb40aa0828b405c02279e2fdabb/xgboost-1.4.2-py3-none-manylinux2014_aarch64.whl
