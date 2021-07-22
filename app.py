@@ -270,9 +270,11 @@ def results():
     last_mask = '../uploads/'+session['folder']+'masks/' + str(len(images_arr)-1) + '.png'
     chart = '../uploads/'+session['folder']+'charts/chart.png'
     video = '../uploads/'+session['folder']+'video/video.mp4'
+    first_image = os.path.basename(os.path.normpath(images_to_classify[0]))
+    last_image = os.path.basename(os.path.normpath(images_to_classify[len(images_to_classify)-1]))
 
     return render_template('results.html', first_mask=first_mask, last_mask=last_mask,
-        chart=chart, video=video)
+        chart=chart, video=video, first_image=first_image, last_image=last_image)
 
 
 @app.route('/', methods=['POST'])
