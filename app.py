@@ -149,7 +149,7 @@ def create_charts(arr, name, folder):
             new = [x/255 for x in v]
             colors[k] = new
 
-        axs[x_axs[r], y_axs].scatter(x, vals, color=colors[r], markersize=5)
+        axs[x_axs[r], y_axs].scatter(x, vals, color=colors[r])
         axs[x_axs[r], y_axs].plot(x, vals, color=colors[r], linewidth=4.0)
         axs[x_axs[r], y_axs].set_ylim([0, 100])
         axs[x_axs[r], y_axs].set_xticks(range(1,len(arr)+1))
