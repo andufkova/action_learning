@@ -12,7 +12,7 @@ import glob
 from dataset import LandCoverData as LCD
 from infer import *
 from model import UNet
-import xgboost
+#import xgboost
 import skvideo.io
 import cv2
 import tensorflow as tf
@@ -21,16 +21,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
 
-model_xgb = load('models/xgbmodel_trained_on_400.joblib')
+#model_xgb = load('models/xgbmodel_trained_on_400.joblib')
 
-#unet_kwargs = dict(
-#        input_shape=(LCD.IMG_SIZE, LCD.IMG_SIZE, LCD.N_CHANNELS),
-#        num_classes=LCD.N_CLASSES,
-#        num_layers=2
-#    )
-#print(f"Creating U-Net with arguments: {unet_kwargs}")
-#model_unet = UNet(**unet_kwargs)
-#model_unet.load_weights('models/epoch12')
+
 
 model_unet = tf.keras.models.load_model('models/epoch12')
 
@@ -187,29 +180,28 @@ def results():
 
     if request.method == "POST":
         if request.form['model'] == 'xgboost':
-            results = model_xgb.predict(to_classify)
-            #print(results)
-            images_arr = np.array_split(results, (len(results)/IMAGE_PIXELS))
-            charts_dir = os.path.join(SAVE_FOLDER, session['folder'], 'charts')
-            if not os.path.exists(charts_dir):
-                os.mkdir(charts_dir)
-            create_charts(images_arr, 'before', session['folder'])
+            #results = model_xgb.predict(to_classify)
+            #images_arr = np.array_split(results, (len(results)/IMAGE_PIXELS))
+            #charts_dir = os.path.join(SAVE_FOLDER, session['folder'], 'charts')
+            #if not os.path.exists(charts_dir):
+            #    os.mkdir(charts_dir)
+            #create_charts(images_arr, 'before', session['folder'])
 
-            os.mkdir(os.path.join(SAVE_FOLDER, session['folder'], 'masks'))
-            for idx, a in enumerate(images_arr):
-                classes_colorpalette = {c: color/255. for (c, color) in LCD.CLASSES_COLORPALETTE.items()}
-                show_mask(idx, session['folder'], np.reshape(a, (-1, 256)),
-                              classes_colorpalette = classes_colorpalette,
-                              classes=LCD.CLASSES
-                )
+            #os.mkdir(os.path.join(SAVE_FOLDER, session['folder'], 'masks'))
+            #for idx, a in enumerate(images_arr):
+            #    classes_colorpalette = {c: color/255. for (c, color) in LCD.CLASSES_COLORPALETTE.items()}
+            #    show_mask(idx, session['folder'], np.reshape(a, (-1, 256)),
+            #                  classes_colorpalette = classes_colorpalette,
+            #                  classes=LCD.CLASSES
+            #    )
 
-            video_dir = os.path.join(SAVE_FOLDER, session['folder'], 'video')
-            if not os.path.exists(video_dir):
-                os.mkdir(video_dir)
-            create_video(len(images_arr), session['folder'])
+            #video_dir = os.path.join(SAVE_FOLDER, session['folder'], 'video')
+            #if not os.path.exists(video_dir):
+            #    os.mkdir(video_dir)
+            #create_video(len(images_arr), session['folder'])
+            print('xgboost')
 
         else:
-            print('using U-net')
             N_CPUS = multiprocessing.cpu_count()
 
             test_dataset = tf.data.Dataset.from_tensor_slices(list(map(str, images_to_classify)))
