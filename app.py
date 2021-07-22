@@ -285,4 +285,4 @@ def upload():
     return render_template('results.html')
 
 if __name__ == '__main__':
-   app.run(debug=True, port=38978)
+   app.run(debug=True, port=80)
