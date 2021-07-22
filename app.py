@@ -219,10 +219,38 @@ def results():
         .repeat(1)\
         .batch(32)\
         .prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-            images_arr = []
-            y_pred = model_unet.predict(test_dataset, steps=len(images_to_classify))
+            results = model_unet.predict(test_dataset, steps=len(images_to_classify))
+
+            
+
             print('-----------------')
-            print(y_pred)          
+            print(results.size)     
+            results = np.argmax(results, axis=-1)
+            results = results.reshape(-1, 1)  
+            print(results.size)  
+            print(results.shape)
+
+
+            images_arr = np.array_split(results, (len(results)/IMAGE_PIXELS))
+
+
+            charts_dir = os.path.join(SAVE_FOLDER, session['folder'], 'charts')
+            if not os.path.exists(charts_dir):
+                os.mkdir(charts_dir)
+            create_charts(images_arr, 'before', session['folder'])
+
+            os.mkdir(os.path.join(SAVE_FOLDER, session['folder'], 'masks'))
+            for idx, a in enumerate(images_arr):
+                classes_colorpalette = {c: color/255. for (c, color) in LCD.CLASSES_COLORPALETTE.items()}
+                show_mask(idx, session['folder'], np.reshape(a, (-1, 256)),
+                              classes_colorpalette = classes_colorpalette,
+                              classes=LCD.CLASSES
+                )
+
+            video_dir = os.path.join(SAVE_FOLDER, session['folder'], 'video')
+            if not os.path.exists(video_dir):
+                os.mkdir(video_dir)
+            create_video(len(images_arr), session['folder']) 
 
     first_mask = '../uploads/'+session['folder']+'masks/0.png'
     last_mask = '../uploads/'+session['folder']+'masks/' + str(len(images_arr)-1) + '.png'
@@ -257,4 +285,4 @@ def upload():
     return render_template('results.html')
 
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run(debug=True, port=38978)
