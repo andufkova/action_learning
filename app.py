@@ -25,7 +25,7 @@ matplotlib.use('Agg')
 
 
 
-model_unet = tf.keras.models.load_model('models/epoch12')
+model_unet = tf.keras.models.load_model('models/epoch8')
 
 # start flask
 app = Flask(__name__, static_folder='/')
